@@ -9,7 +9,8 @@ class App extends Component {
       { name: 'Laura', age: 31},
       { name: 'Eris', age: 3}
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPersons: false
   };
 
   switchNameHandler = (newName) => {
@@ -34,6 +35,11 @@ class App extends Component {
     } )
   }
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow});
+  }
+
   render () {
     const buttonStyle = {
       backgroundColor: 'white',
@@ -49,18 +55,23 @@ class App extends Component {
         <p>This is really working!</p>
         <button
           style={buttonStyle}
-          onClick={() => this.switchNameHandler('Dave the pave')}>Switch name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} 
-          click={this.switchNameHandler.bind(this, 'Super Dave')} >My hobbies: Music</Person>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          changed={this.nameChangedHandler} />
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        {
+          this.state.showPersons ?
+            <div>
+              <Person
+                name={this.state.persons[0].name}
+                age={this.state.persons[0].age} 
+                click={this.switchNameHandler.bind(this, 'Super Dave')} >My hobbies: Music</Person>
+              <Person
+                name={this.state.persons[1].name}
+                age={this.state.persons[1].age}
+                changed={this.nameChangedHandler} />
+              <Person
+                name={this.state.persons[2].name}
+                age={this.state.persons[2].age} />
+            </div> : null
+        }
       </div>
     );
   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi, I\'m a React App!!!'))
